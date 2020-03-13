@@ -1,6 +1,6 @@
 # task4-hashtable
 
-[![Build Status](https://travis-ci.com/itmo-java-basics-2020/task4-hashtable-triyul22.svg?branch=solution)](https://travis-ci.com/itmo-java-basics-2020/task4-hashtable-triyul22)
+[![Build Status](https://travis-ci.com/itmo-java-basics-2020/task-3-hashtable-classes-inner-classes-class-object-triyul22.svg?branch=solution)](https://travis-ci.com/itmo-java-basics-2020/task4-hashtable-triyul22)
 
 
 Требуется разработать реализацию ассоциативного массива - структуры данных, которая хранит пары (ключ - значение) - на основе хеш-таблицы.
