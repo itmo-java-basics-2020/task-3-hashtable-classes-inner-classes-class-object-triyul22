@@ -1,7 +1,5 @@
 package ru.itmo.java;
 
-import java.util.Map;
-
 public class HashTable {
     private Entry[] element;
     private int size;
@@ -9,28 +7,26 @@ public class HashTable {
     private int capacity;
     private int threshold;
     private double loadFactor;
-    private int top;
 
-    HashTable(int initialCapacity, double loadFactor){
-        this.capacity = initialCapacity;
-        this.loadFactor = loadFactor;
-        this.threshold = (int) (loadFactor * capacity);
-        this.size = 0;
-        this.realSize = 0;
-        element = new Entry[capacity];
-    }
-    HashTable(int initialCapacity){
+    HashTable(int initialCapacity) {
         this.capacity = initialCapacity;
         this.loadFactor = 0.5;
         this.size = 0;
         this.realSize = 0;
         element = new Entry[capacity];
     }
-    int HashFunc(Object key){
+
+    HashTable(int initialCapacity, double loadFactor) {
+        this(initialCapacity);
+        this.loadFactor = loadFactor;
+        this.threshold = (int) (loadFactor * capacity);
+    }
+
+    int HashFunc(Object key) {
         return Math.abs(key.hashCode() % capacity);
     }
 
-    void resize() {
+    private void resize() {
         capacity *= 2;
         this.threshold = (int) (loadFactor * capacity);
         size = realSize = 0;
@@ -43,11 +39,10 @@ public class HashTable {
         }
     }
 
-
     Object put(Object key, Object value) {
         var hashCode = HashFunc(key);
         var ent = new Entry(key, value);
-        while (true){
+        while (true) {
             if (element[hashCode] == null || element[hashCode].key.equals(key) && element[hashCode].deleted) {
                 if (element[hashCode] != null) {
                     element[hashCode].deleted = false;
@@ -55,12 +50,12 @@ public class HashTable {
                 element[hashCode] = ent;
                 this.size++;
                 this.realSize++;
-                if (realSize > this.threshold){
+                if (realSize > this.threshold) {
                     resize();
                 }
                 return null;
             }
-            if(element[hashCode].key.equals(key) ) {
+            if (element[hashCode].key.equals(key)) {
                 Object old = element[hashCode].value;
                 element[hashCode].value = value;
                 return old;
@@ -71,10 +66,10 @@ public class HashTable {
 
     Object get(Object key) {
         int hash = HashFunc(key);
-        while(true) {
+        while (true) {
             if (element[hash] == null)
                 return null;
-            if (element[hash].key.equals(key) && ! element[hash].deleted)
+            if (element[hash].key.equals(key) && !element[hash].deleted)
                 return element[hash].value;
             hash = (hash + 1) % capacity;
         }
@@ -82,12 +77,12 @@ public class HashTable {
 
     Object remove(Object key) {
         int hash = HashFunc(key);
-        while (true){
+        while (true) {
             if (element[hash] == null) {
                 return null;
             }
 
-            if (element[hash].key.equals(key) && ! element[hash].deleted) {
+            if (element[hash].key.equals(key) && !element[hash].deleted) {
                 element[hash].deleted = true;
                 this.size--;
                 return element[hash].value;
@@ -100,13 +95,14 @@ public class HashTable {
         return size;
     }
 
-    private static class Entry{
+    private static class Entry {
         private Object key;
         private Object value;
         private boolean deleted = false;
-        Entry(Object key, Object value){
-            this.key=key;
-            this.value=value;
+
+        Entry(Object key, Object value) {
+            this.key = key;
+            this.value = value;
         }
     }
 }
